@@ -2,7 +2,7 @@
 cls
 chcp 65001 >nul
 title ServerDeployer - Wonderful tool to deploy shell scripts on your server
-color E
+color F
 
 @REM Variables INIT
 set root_dir=%~dp0
