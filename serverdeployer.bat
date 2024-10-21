@@ -2,36 +2,49 @@
 cls
 chcp 65001 >nul
 title ServerDeployer - Wonderful tool to deploy shell scripts on your server
-color D
+color E
 
 @REM Variables
-set 
+set vps_ip = ""
+set vps_user = ""
+set vps_pass = "" 
 
 @REM Banner
 :banner
-echo   _________                              ________                .__                             
-echo  /   _____/ ______________  __ __________\______ \   ____ ______ |  |   ____ ___.__. ___________ 
-echo  \_____  \_/ __ \_  __ \  \/ // __ \_  __ \    |  \_/ __ \\____ \|  |  /  _ <   |  |/ __ \_  __ \
-echo  /        \  ___/|  | \/\   /\  ___/|  | \/    `   \  ___/|  |_> >  |_(  <_> )___  \  ___/|  | \/
-echo /_______  /\___  >__|    \_/  \___  >__| /_______  /\___  >   __/|____/\____// ____|\___  >__|   
-echo         \/     \/                 \/             \/     \/|__|               \/         \/      v1.0 
+
+@REM 1. Settings: met à jour les paramètres de configuration du serveur (VPS creds etc)
+@REM 2. Scan Configs: scanne les fichiers de déploiement du serveur (scripts shell)
+@REM 3. Deploy: il va déployer les serveurs en fonction des scripts shell que on lui a donné (choix de fichiers config deployment)
+@REM 4. Help: explique toutes les fonctionnalitées de cet multitool
+@REM 5. Credits: affiche les crédits de cet outil
+
+echo.
+cd assets/
+type banner.txt
 echo .
-echo ┍─────────────────────┑
-echo │      Options:       │
-echo │                     │
-echo │ 1. Settings         │ @REM met à jour les paramètres de configuration du serveur (VPS creds etc)
-echo │                     │
-echo │ 2. Scan Configs     │ @REM scanne les fichiers de déploiement du serveur (scripts shell)
-echo │                     │
-echo │ 3. Deploy           │ @REM il va déployer les serveurs en fonction des scripts shell que on lui a donné (choix de fichiers config deployment)
-echo │                     │
-echo │ 4. Help             │ @REM explique toutes les fonctionnalitées de cet multitool
-echo │                     │
-echo │ 5. Credits          │ @REM affiche les crédits de cet outil
-echo │                     │
-echo ┕─────────────────────┙
+echo ┌────────────────────────────────┐
+echo │            Options:            │
+echo │                                │
+echo │ 1. Settings         3. Deploy  │
+echo │                                │
+echo │ 2. Scan Configs     4. Help    │
+echo │                                │
+echo │          5. Credits            │
+echo │                                │
+echo └────────────────────────────────┘
+echo .
 
 set /p option=Choose an option:
+
+if /I "%option%"=="1" goto settings
+if /I "%option%"=="2" goto scan
+if /I "%option%"=="3" goto deploy
+if /I "%option%"=="4" goto help
+if /I "%option%"=="5" goto credits
+
+pause
+goto banner
+
 
 :settings
 echo [Settings] - Mise à jour des paramètres...
@@ -44,12 +57,12 @@ pause
 goto banner
 
 :deploy
-echo [Deploy] - Déploiement des serveurs...
+echo [Deploy] - Script is deploying on server...
 pause
 goto banner
 
 :help
-echo [Help] - Voici comment utiliser cet outil...
+echo [Help] - Help desk
 pause
 goto banner
 
