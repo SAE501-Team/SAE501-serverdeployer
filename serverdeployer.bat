@@ -60,13 +60,35 @@ goto banner
 @REM options
 :settings
 cls
-echo [Settings] - Mise à jour des paramètres...
+echo [Settings] - Update server configuration parameters:
+set /p vps_user=Enter the VPS username:
+cls
+
+echo [Settings] - Update server configuration parameters:
+set /p vps_ip=Enter the VPS IP address:
+cls
+
+echo [Settings] - Update server configuration parameters:
+set /p vps_pass=Enter the VPS password (caracters aren't hidden!):
+echo %vps_user% %vps_ip% %vps_pass%
 pause
 goto banner
 
+@REM TODO: Scan server deployment files
 :scan
 cls
-echo [Scan Configs] - Scan des configurations de déploiement...
+set /p scan_choice= Scan server deployment files? (Y/N)
+if /I "%scan_choice%"=="Y" (
+    cls
+    goto scanloading
+)
+if /I "%scan_choice%"=="N" (
+    goto scan
+    echo Scanning cancelled.
+    timeout /t 1 >nul
+)
+
+echo Invalid choice. Please enter Y or N.
 pause
 goto banner
 
@@ -98,6 +120,9 @@ goto banner
 
 :help
 cls
+cd assets/
+type banner.txt
+cd %root_dir%
 echo.
 echo ┌───────────────────────────────────────────────────────────────────────┐
 echo │                            Command list                               │
@@ -115,6 +140,9 @@ goto banner
 
 :credits
 cls
+cd assets/
+type banner.txt
+cd %root_dir%
 echo .
 echo ServerDeployer multitool made by Alex
 echo https://github.com/YxxgSxxl/
@@ -126,6 +154,7 @@ goto banner
 set /p exit_choice=Exit the tool? (Y/N):
 if /I "%exit_choice%"=="Y" (
     cls
+    title cmd
     cmd /k
 )
 if /I "%exit_choice%"=="N" goto banner
