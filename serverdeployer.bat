@@ -32,16 +32,16 @@ cd %root_dir%
 :menu
 echo .
 echo .
-echo ┌────────────────────────────────┐
-echo │            Options:            │
-echo │                                │
-echo │ 1. Settings         4. Help    │
-echo │                                │
-echo │ 2. Scan Configs     5. Credits │
-echo │                                │
-echo │ 3. Deploy           6. Quit    │
-echo │                                │
-echo └────────────────────────────────┘
+echo                               ┌────────────────────────────────┐
+echo                               │            Options:            │
+echo                               │                                │
+echo                               │ 1. Settings         4. Help    │
+echo                               │                                │
+echo                               │ 2. Scan Configs     5. Credits │
+echo                               │                                │
+echo                               │ 3. Deploy           6. Quit    │
+echo                               │                                │
+echo                               └────────────────────────────────┘
 
 set /p option=Choose an option:
 
@@ -124,16 +124,16 @@ cd assets/
 type banner.txt
 cd %root_dir%
 echo.
-echo ┌───────────────────────────────────────────────────────────────────────┐
-echo │                            Command list                               │
-echo ├───────────────────────────────────────────────────────────────────────┤
-echo │ 1. Settings: Update server configuration parameters                   │
-echo │ 2. Scan Configs: Scan server deployment files (shell scripts)         │
-echo │ 3. Deploy: Deploy servers based on provided shell script config files │
-echo │ 4. Help: Explain all functionalities of this multitool                │
-echo │ 5. Credits: Display credits for this tool                             │
-echo │ 6. Quit: Exit the tool                                                │
-echo └───────────────────────────────────────────────────────────────────────┘
+echo                ┌───────────────────────────────────────────────────────────────────────┐
+echo                │                            Command list                               │
+echo                ├───────────────────────────────────────────────────────────────────────┤
+echo                │ 1. Settings: Update server configuration parameters                   │
+echo                │ 2. Scan Configs: Scan server deployment files (shell scripts)         │
+echo                │ 3. Deploy: Deploy servers based on provided shell script config files │
+echo                │ 4. Help: Explain all functionalities of this multitool                │
+echo                │ 5. Credits: Display credits for this tool                             │
+echo                │ 6. Quit: Exit the tool                                                │
+echo                └───────────────────────────────────────────────────────────────────────┘
 echo.
 pause
 goto banner
@@ -144,8 +144,14 @@ cd assets/
 type banner.txt
 cd %root_dir%
 echo .
-echo ServerDeployer multitool made by Alex
-echo https://github.com/YxxgSxxl/
+echo .
+echo              ServerDeployer multitool made by Alex
+cd assets/
+type katana.txt
+cd %root_dir%
+echo .
+echo                                    https://github.com/YxxgSxxl/
+echo .
 echo .
 pause
 goto banner
