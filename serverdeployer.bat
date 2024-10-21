@@ -1,15 +1,17 @@
 @echo off
 cls
 chcp 65001 >nul
-title ServerDeployer - Wonderful tool to deploy shell scripts on your server
+title ServerDeployerv1.0 - Wonderful tool to deploy shell scripts on your server
 color F
+mode con cols=105 lines=30
 
 @REM Variables INIT
 set root_dir=%~dp0
+set is_deployed = false
 
 set vps_ip = ""
 set vps_user = ""
-set vps_pass = "" 
+set vps_pass = ""
 
 @REM Banner INIT
 :banner
@@ -55,36 +57,77 @@ echo Invalid option. Please choose a valid option from the menu.
 pause
 goto banner
 
+@REM options
 :settings
+cls
 echo [Settings] - Mise à jour des paramètres...
 pause
 goto banner
 
 :scan
+cls
 echo [Scan Configs] - Scan des configurations de déploiement...
 pause
 goto banner
 
 :deploy
+cls
+goto deploading
+pause
+goto banner
+
+:deploading
 echo [Deploy] - Script is deploying on server...
+setlocal enabledelayedexpansion
+set "is_deployed=false"
+for /L %%i in (1,1,3) do (
+    set "dots="
+    for /L %%j in (1,1,%%i) do set "dots=!dots!."
+    cls
+    echo [Deploy] - Script is deploying on server!dots!
+    timeout /t 1 >nul
+    if "!is_deployed!"=="true" goto deployed
+)
+goto deploading
+
+:deployed
+endlocal
+echo Deployment completed successfully!.
 pause
 goto banner
 
 :help
-echo [Help] - Help desk
+cls
+echo.
+echo ┌───────────────────────────────────────────────────────────────────────┐
+echo │                            Command list                               │
+echo ├───────────────────────────────────────────────────────────────────────┤
+echo │ 1. Settings: Update server configuration parameters                   │
+echo │ 2. Scan Configs: Scan server deployment files (shell scripts)         │
+echo │ 3. Deploy: Deploy servers based on provided shell script config files │
+echo │ 4. Help: Explain all functionalities of this multitool                │
+echo │ 5. Credits: Display credits for this tool                             │
+echo │ 6. Quit: Exit the tool                                                │
+echo └───────────────────────────────────────────────────────────────────────┘
+echo.
 pause
 goto banner
 
 :credits
+cls
 echo .
 echo ServerDeployer multitool made by Alex
 echo https://github.com/YxxgSxxl/
+echo .
 pause
 goto banner
 
 :quit
 set /p exit_choice=Exit the tool? (Y/N):
-if /I "%exit_choice%"=="Y" exit
+if /I "%exit_choice%"=="Y" (
+    cls
+    cmd /k
+)
 if /I "%exit_choice%"=="N" goto banner
 echo Invalid choice. Please enter Y or N.
 pause
