@@ -8,14 +8,23 @@ mode con cols=105 lines=30
 @REM Variables INIT
 set root_dir=%~dp0
 set is_deployed = false
+set deploy_choice = 0
 
 set vps_ip = ""
 set vps_user = ""
 set vps_pass = ""
 
+setlocal enabledelayedexpansion
+@REM Tableau de configs
+set "configs[0]="
+set config_count=0
+
 @REM Banner INIT
 :banner
 cls
+cd assets/
+type banner.txt
+cd %root_dir%
 
 @REM /!\ OPTIONS DOCUMENTATION /!\
 @REM 1. Settings: met à jour les paramètres de configuration du serveur (VPS creds etc)
@@ -23,11 +32,6 @@ cls
 @REM 3. Deploy: il va déployer les serveurs en fonction des scripts shell que on lui a donné (choix de fichiers config deployment)
 @REM 4. Help: explique toutes les fonctionnalitées de cet multitool
 @REM 5. Credits: affiche les crédits de cet outil
-
-echo.
-cd assets/
-type banner.txt
-cd %root_dir%
 
 :menu
 echo .
@@ -80,12 +84,36 @@ cls
 set /p scan_choice= Scan server deployment files? (Y/N)
 if /I "%scan_choice%"=="Y" (
     cls
-    goto scanloading
+    echo [Scan] - Scanning server deployment files...
+    set "config_count=0"
+    setlocal enabledelayedexpansion
+
+    for /r "%root_dir%configs" %%f in (*.sh) do (
+    set /a config_count+=1
+    set "configs[!config_count!]=%%~nxf"
+    )
+
+    if "%config_count%"=="0" (
+        echo No deployment files found.
+        pause
+        goto banner
+    )
+
+    cls
+    echo Found !config_count! configuration file^(s^)^:
+    for /L %%i in (1,1,!config_count!) do (
+        color 0A
+        echo %%i. !configs[%%i]!
+    )
+
+pause
+goto banner
 )
 if /I "%scan_choice%"=="N" (
-    goto scan
+    cls
     echo Scanning cancelled.
     timeout /t 1 >nul
+    goto banner
 )
 
 echo Invalid choice. Please enter Y or N.
@@ -94,6 +122,11 @@ goto banner
 
 :deploy
 cls
+if "%config_count%"=="0" (
+    echo No deployment files found. Please scan for deployment files first.
+    pause
+    goto banner
+)
 goto deploading
 pause
 goto banner
@@ -110,7 +143,10 @@ for /L %%i in (1,1,3) do (
     timeout /t 1 >nul
     if "!is_deployed!"=="true" goto deployed
 )
-goto deploading
+cd apps/
+START putty.exe -ssh %bps_ip% -l %vps_user% -pw "%vps_pass%"
+
+@REM goto deploading
 
 :deployed
 endlocal
