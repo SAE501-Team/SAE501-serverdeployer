@@ -3,9 +3,10 @@ cls
 chcp 65001 >nul
 title ServerDeployer v1.0 - Deploy shell scripts on your server by YxxgSxxl
 color F
-mode con cols=105 lines=30
+mode con cols=105 lines=26
 
 REM Variables INIT
+set script_version=ServerDeployer v1.0
 set root_dir=%~dp0
 set is_deployed=false
 
@@ -34,8 +35,7 @@ REM 4. Help: explique toutes les fonctionnalitées de cet multitool
 REM 5. Credits: affiche les crédits de cet outil
 
 :menu
-echo .
-echo                               ┌────────────────────────────────┐
+echo                              -┌────────────────────────────────┐-
 echo                               │            Options:            │
 echo                               │                                │
 echo                               │ 1. Settings         4. Help    │
@@ -44,7 +44,7 @@ echo                               │ 2. Scan Configs     5. Credits │
 echo                               │                                │
 echo                               │ 3. Deploy           6. Quit    │
 echo                               │                                │
-echo                               └────────────────────────────────┘
+echo                              -└────────────────────────────────┘-
 
 set /p option=Choose an option:
 
@@ -144,11 +144,11 @@ pause
 goto banner
 
 :deploading
-echo [Deploy] - Script is deploying on server...
 @REM setlocal enabledelayedexpansion
 set "is_deployed=false"
 
 rem Afficher les configurations disponibles
+cls
 echo Choose a configuration file to deploy:
 for /L %%i in (1,1,!config_count!) do (
     echo %%i. !configs[%%i]!
@@ -204,7 +204,11 @@ color a
 cls
 echo Deployment completed successfully!.
 echo .
+echo .
 echo !configs[%config_choice%]! has been deployed on %vps_ip%.
+echo .
+echo .
+echo Thank you for using !script_version!^^!
 pause
 goto banner
 
@@ -213,8 +217,6 @@ cls
 pushd assets
 type banner.txt
 popd
-echo.
-echo.
 echo                ┌───────────────────────────────────────────────────────────────────────┐
 echo                │                            Command list                               │
 echo                ├───────────────────────────────────────────────────────────────────────┤
@@ -230,12 +232,11 @@ pause
 goto banner
 
 :credits
+color e
 cls
 pushd assets
 type banner.txt
 popd
-echo .
-echo .
 echo              ServerDeployer multitool made by YxxgSxxl
 pushd assets
 type katana.txt
