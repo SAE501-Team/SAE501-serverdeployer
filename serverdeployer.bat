@@ -181,19 +181,18 @@ REM PSCP: Copie le script sur le serveur
 echo Copying the script to the server...
 pscp.exe -pw "!vps_pass!" "configs/!configs[%config_choice%]!" "%vps_user%@%vps_ip%:/tmp/"
 
-@REM REM Suppression du fichier temporaire créer sur le VPS
-@REM echo Deleting the script on the server...
-@REM plink.exe -v %vps_user%@%vps_ip% -pw "!vps_pass!" "rm -f /tmp/!configs[%config_choice%]!"
-
 echo Running plink command...
 plink.exe -v %vps_user%@%vps_ip% -pw "!vps_pass!" "!command!"
-pause
+
+@REM todo: make the script work without the need of pressing enter twice
+REM Suppression du fichier temporaire créer sur le VPS
+set "deletecommand=rm -f \"/tmp/!configs[%config_choice%]!\""
+echo Deleting the script on the server...
+plink.exe -v %vps_user%@%vps_ip% -pw "!vps_pass!" "!deletecommand!"
 
 popd
 
 set "is_deployed=true"
-pause
-
 if "!is_deployed!"=="true" goto deployed
 
 
