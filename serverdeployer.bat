@@ -1,7 +1,7 @@
 @echo off
 cls
 chcp 65001 >nul
-title ServerDeployer v1.0 - Wonderful tool to deploy shell scripts on your server
+title ServerDeployer v1.0 - Deploy shell scripts on your server by YxxgSxxl
 color F
 mode con cols=105 lines=30
 
