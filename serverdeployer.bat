@@ -72,9 +72,13 @@ set /p vps_ip=Enter the VPS IP address:
 cls
 
 echo [Settings] - Update server configuration parameters:
-set /p vps_pass=Enter the VPS password ^(caracters aren^'t hidden^):
+set /p vps_pass=Enter the VPS password ^(characters aren^'t hidden^):
 echo !vps_pass! > "%temp%\vps_password.txt"
-echo !vps_user! !vps_ip! !vps_pass!
+cls
+echo [Settings] - parameters updated:
+echo user: !vps_user!
+echo ip: !vps_ip!
+echo pass: ********
 pause
 goto banner
 
@@ -218,10 +222,10 @@ pushd assets
 type banner.txt
 popd
 echo                ┌───────────────────────────────────────────────────────────────────────┐
-echo                │                            Command list                               │
+echo                │                         --- Command list ---                          │
 echo                ├───────────────────────────────────────────────────────────────────────┤
-echo                │ 1. Settings: Update server configuration parameters                   │
-echo                │ 2. Scan Configs: Scan server deployment files (shell scripts)         │
+echo                │ 1. Settings: Update server connexion parameters for ssh               │
+echo                │ 2. Scan Configs: Scan server deployment files ^(shell scripts^)         │
 echo                │ 3. Deploy: Deploy servers based on provided shell script config files │
 echo                │ 4. Help: Explain all functionalities of this multitool                │
 echo                │ 5. Credits: Display credits for this tool                             │
