@@ -82,7 +82,6 @@ echo pass: ********
 pause
 goto banner
 
-@REM TODO: Scan server deployment files
 :scan
 cls
 set /p scan_choice= Scan server deployment files? (Y/N)
@@ -188,6 +187,7 @@ pscp.exe -pw "!vps_pass!" "configs/!configs[%config_choice%]!" "%vps_user%@%vps_
 echo Running plink command...
 plink.exe -v %vps_user%@%vps_ip% -pw "!vps_pass!" "!command!"
 
+@REM todo: when deploying the config, correct the syntax command error
 @REM todo: make the script work without the need of pressing enter twice
 REM Suppression du fichier temporaire créer sur le VPS
 set "deletecommand=rm -f \"/tmp/!configs[%config_choice%]!\""
